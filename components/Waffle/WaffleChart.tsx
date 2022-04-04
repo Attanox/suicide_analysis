@@ -10,7 +10,7 @@ type LocalProps = {
   attributes: Attributes;
   familyId: string;
   total: number;
-  attribute?: K;
+  attribute: K | '';
 };
 
 const waffleProps = {

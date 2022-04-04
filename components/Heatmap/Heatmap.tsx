@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Attributes } from '../../types';
+import { Attributes, K } from '../../types';
 import { getHeatMapData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
@@ -7,7 +7,7 @@ import { Box } from '@chakra-ui/react';
 type LocalProps = {
   attributes: Attributes;
   familyId: string;
-  setAttribute: (a: string) => void;
+  setAttribute: (a: K | '') => void;
 };
 
 const Heatmap = (props: LocalProps) => {
@@ -50,7 +50,7 @@ const Heatmap = (props: LocalProps) => {
         motionDamping={9}
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
-        onClick={(datum, event) => props.setAttribute(String(datum.xKey))}
+        onClick={(datum, event) => props.setAttribute(String(datum.xKey) as K)}
       />
     </Box>
   );

@@ -16,7 +16,6 @@ const WaffleCell = (props: any) => {
     onLeave,
     onClick,
   } = props;
-  if (data) console.log({ props });
 
   return (
     <rect
