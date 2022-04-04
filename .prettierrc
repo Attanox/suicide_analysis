@@ -10,12 +10,6 @@
       "options": {
         "parser": "css"
       }
-    },
-    {
-      "files": "*.(ts|tsx)",
-      "options": {
-        "parser": "babel"
-      }
     }
   ]
 }

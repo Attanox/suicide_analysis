@@ -10,7 +10,11 @@ type LocalProps = {
 const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
   return (
     <RadioGroup colorScheme="green" onChange={setFamilyId} value={familyId}>
-      <Stack spacing={[1, 5]} direction={['column', 'row']}>
+      <Stack
+        spacing={[1, 5]}
+        justifyContent="center"
+        direction={['column', 'row']}
+      >
         {familyIds.map((fId) => {
           return (
             <Radio key={fId} value={fId}>

@@ -1,33 +1,37 @@
-import { Data, Datum } from '../../../types';
+import { Attributes, Datum, K } from '../../../types';
 
-type K = keyof Datum;
+export const getWaffleData = (
+  attributes: Attributes,
+  familyId: string,
+  attribute: K | '' = ''
+) => {
+  const familyData = attributes.filter((d) => d.kindred === familyId);
 
-const colors: { [k: string]: string } = {
-  '1': 'hsl(165, 70%, 50%)',
-  '0': 'hsl(181, 70%, 50%)',
-};
+  const result = [
+    {
+      id: 'suicides',
+      label: 'suicides',
+      value: familyData.length,
+      color: '#468df3',
+    },
+  ];
 
-export const getWaffleData = (mappedData: Data, familyId: string) => {
-  const result = mappedData
-    .filter((d) => d.kindred === familyId)
-    .map((d) => {
-      const id = d.id;
-      let record = {
-        id,
-      };
-
-      (Object.keys(d) as K[])
-        .filter((k) => k !== 'kindred' && k !== 'id' && k !== 'suicide')
-        .forEach((k) => {
-          const v = Number(d[k]);
-          record = Object.assign(record, {
-            [k]: v,
-            [`${k}Color`]: colors[String(v)],
-          });
-        });
-
-      return record;
+  if (attribute) {
+    result.push({
+      id: attribute,
+      label: attribute,
+      value: 0,
+      color: '#a053f0',
     });
+  }
+
+  familyData.forEach((d) => {
+    (Object.keys(d) as K[]).forEach((k) => {
+      if (k === attribute) {
+        result[1].value += Number(d[k]);
+      }
+    });
+  });
 
   return result;
 };

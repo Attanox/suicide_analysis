@@ -1,71 +1,32 @@
 import * as React from 'react';
-import { Data } from '../../types';
+import { Attributes } from '../../types';
 import { getHeatMapData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
 
 type LocalProps = {
-  mappedData: Data;
+  attributes: Attributes;
   familyId: string;
+  setAttribute: (a: string) => void;
 };
 
-const CustomCell = ({
-  value,
-  x,
-  y,
-  width,
-  height,
-  color,
-  opacity,
-  borderWidth,
-  borderColor,
-  textColor,
-}: any) => (
-  <g transform={`translate(${x}, ${y})`}>
-    <path
-      transform={`rotate(${value < 50 ? 180 : 0})`}
-      fill={color}
-      fillOpacity={opacity}
-      strokeWidth={borderWidth}
-      stroke={borderColor}
-      d={`
-                M0 -${Math.round(height / 2)}
-                L${Math.round(width / 2)} ${Math.round(height / 2)}
-                L-${Math.round(width / 2)} ${Math.round(height / 2)}
-                L0 -${Math.round(height / 2)}
-            `}
-    />
-    <text
-      dominantBaseline="central"
-      textAnchor="middle"
-      style={{ fill: textColor }}
-      dy={value < 50 ? -6 : 6}
-    >
-      {value}
-    </text>
-  </g>
-);
-
 const Heatmap = (props: LocalProps) => {
-  const heatMapData = getHeatMapData(props.mappedData, props.familyId);
+  const heatMapData = getHeatMapData(props.attributes, props.familyId);
 
-  const firstObj: any = { ...props.mappedData[0] };
+  const firstObj: any = { ...props.attributes[0] };
   delete firstObj['id'];
   delete firstObj['kindred'];
   delete firstObj['suicide'];
   const keys = Object.keys(firstObj);
 
-  console.log({ heatMapData });
-
   return (
-    <Box height={1000} marginTop="20px">
+    <Box width="100%" height={`calc(100vh - 50px)`} marginTop="20px">
       <ResponsiveHeatMap
         data={heatMapData}
         keys={keys}
         indexBy="id"
-        // colors="GnBu"
         margin={{ top: 60, right: 90, bottom: 60, left: 90 }}
-        // forceSquare={true}
+        forceSquare={true}
         axisTop={{
           tickSize: 5,
           tickPadding: 5,
@@ -89,6 +50,7 @@ const Heatmap = (props: LocalProps) => {
         motionDamping={9}
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
+        onClick={(datum, event) => props.setAttribute(String(datum.xKey))}
       />
     </Box>
   );

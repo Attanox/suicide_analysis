@@ -14,9 +14,10 @@ export type Datum = {
   obesity: boolean;
   psychosis: boolean;
   'somatic disorder': boolean;
-  suicide: boolean;
   id: string;
   kindred: string;
 };
 
-export type Data = Datum[];
+export type K = keyof Datum;
+
+export type Attributes = Datum[];

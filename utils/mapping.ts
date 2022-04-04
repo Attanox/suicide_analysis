@@ -1,13 +1,16 @@
-import type { Data } from '../types';
-import * as data from '../public/result.json';
+import type { Attributes } from '../types';
+import * as attributes from '../public/attributes.json';
+import * as structure from '../public/structure.json';
 
 const getBool = (d: string): boolean => {
   if (d === 'True') return true;
   return false;
 };
 
-export const getMappedData = () => {
-  const mappedData: Data = data.map((d) => {
+export const getAttributes = () => {
+  const result: Attributes = attributes.map((d) => {
+    const matchingStructure = structure.find((s) => s.personid === d.personid);
+
     return {
       id: String(d.personid),
       PD: getBool(d['PD']),
@@ -25,18 +28,21 @@ export const getMappedData = () => {
       obesity: getBool(d['obesity']),
       psychosis: getBool(d['psychosis']),
       'somatic disorder': getBool(d['somatic disorder']),
-      suicide: d['suicide'] === 'Y',
-      kindred: String(d['KindredID']),
+      kindred: String(matchingStructure?.KindredID),
     };
   });
 
-  return mappedData;
+  return result;
 };
 
 export const getFamilyIds = () => {
-  const result = data
+  const result = structure
     .map((d) => String(d['KindredID']))
     .sort((a, b) => Number(a) - Number(b));
 
   return Array.from(new Set(result));
+};
+
+export const getTotal = (familyId: string) => {
+  return structure.filter((d) => String(d['KindredID']) === familyId).length;
 };

@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -5,25 +6,26 @@ import FamilyPicker from '../components/FamilyPicker/FamilyPicker';
 import Heatmap from '../components/Heatmap/Heatmap';
 import WaffleChart from '../components/Waffle/WaffleChart';
 import styles from '../styles/Home.module.css';
-import { Data } from '../types';
-import { getFamilyIds, getMappedData } from '../utils/mapping';
+import { Attributes } from '../types';
+import { getFamilyIds, getAttributes, getTotal } from '../utils/mapping';
 
 export async function getStaticProps() {
   return {
     props: {
-      mappedData: getMappedData(),
+      attributes: getAttributes(),
       familyIds: getFamilyIds(),
     },
   };
 }
 
 type LocalProps = {
-  mappedData: Data;
+  attributes: Attributes;
   familyIds: string[];
 };
 
-const Home: NextPage<LocalProps> = ({ mappedData, familyIds }) => {
+const Home: NextPage<LocalProps> = ({ attributes, familyIds }) => {
   const [familyId, setFamilyId] = useState(familyIds[0]);
+  const [attribute, setAttribute] = useState('');
 
   return (
     <div className={styles.container}>
@@ -35,8 +37,19 @@ const Home: NextPage<LocalProps> = ({ mappedData, familyIds }) => {
         setFamilyId={setFamilyId}
         familyId={familyId}
       />
-      <Heatmap mappedData={mappedData} familyId={familyId} />
-      <WaffleChart />
+      <Box display="flex" alignItems={'center'}>
+        <Heatmap
+          attributes={attributes}
+          setAttribute={setAttribute}
+          familyId={familyId}
+        />
+        <WaffleChart
+          total={getTotal(familyId)}
+          attributes={attributes}
+          familyId={familyId}
+          attribute={attribute}
+        />
+      </Box>
     </div>
   );
 };

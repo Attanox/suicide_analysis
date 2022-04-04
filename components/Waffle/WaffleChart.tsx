@@ -1,35 +1,51 @@
-import { Box } from '@chakra-ui/react';
-import { Waffle } from '@nivo/waffle';
 import * as React from 'react';
+import { Box, Text } from '@chakra-ui/react';
+import { Waffle } from '@nivo/waffle';
 
-const total = 200;
-const data = [
-  {
-    id: 'men',
-    label: 'men',
-    value: 64,
-    color: '#468df3',
-  },
-  {
-    id: 'women',
-    label: 'women',
-    value: 72,
-    color: '#a053f0',
-  },
-];
-const commonProps = {
-  width: 900,
-  height: 500,
-  total,
-  data,
-  rows: 24,
-  columns: 18,
+import { Attributes, K } from '../../types';
+import { getWaffleData } from './utils/mapping';
+import WaffleCell from './WaffleCell';
+
+type LocalProps = {
+  attributes: Attributes;
+  familyId: string;
+  total: number;
+  attribute?: K;
 };
 
-const WaffleChart = () => {
+const waffleProps = {
+  width: 500,
+  height: 500,
+  rows: 15,
+  columns: 15,
+  cellComponent: WaffleCell,
+};
+
+const WaffleChart = ({
+  total,
+  attributes,
+  familyId,
+  attribute,
+}: LocalProps) => {
+  const waffleData = getWaffleData(attributes, familyId, attribute);
+
   return (
-    <Box height={1000}>
-      <Waffle {...commonProps} />
+    <Box
+      width="100%"
+      height={`calc(100vh - 50px)`}
+      marginTop="20px"
+      display="flex"
+      justifyContent={'center'}
+      alignItems="center"
+      flexDirection="column"
+    >
+      <Text fontSize="lg" style={{ marginBottom: '10px' }}>
+        Current attribute:{' '}
+        <Text as="span" fontSize="lg" color="tomato">
+          {attribute}
+        </Text>
+      </Text>
+      <Waffle {...waffleProps} data={waffleData} total={total} />
     </Box>
   );
 };
