@@ -7,7 +7,7 @@ import { Box } from '@chakra-ui/react';
 type LocalProps = {
   attributes: Attributes;
   familyId: string;
-  setAttribute: (a: K | '') => void;
+  setAttribute: (a: Array<K | ''>) => void;
 };
 
 const Heatmap = (props: LocalProps) => {
@@ -44,13 +44,15 @@ const Heatmap = (props: LocalProps) => {
         }}
         cellOpacity={1}
         cellBorderColor={{ from: 'color', modifiers: [['darker', 0.4]] }}
-        labelTextColor={'white'}
+        labelTextColor={'transparent'}
         animate={true}
         motionStiffness={80}
         motionDamping={9}
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
-        onClick={(datum, event) => props.setAttribute(String(datum.xKey) as K)}
+        onClick={(datum, event) =>
+          props.setAttribute([String(datum.xKey) as K])
+        }
       />
     </Box>
   );

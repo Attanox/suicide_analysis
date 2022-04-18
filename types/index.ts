@@ -1,3 +1,5 @@
+import * as structure from '../public/structure.json';
+
 export type Datum = {
   PD: boolean;
   'PD-Cluster B-emotional': boolean;
@@ -21,3 +23,5 @@ export type Datum = {
 export type K = keyof Datum;
 
 export type Attributes = Datum[];
+
+export type Structure = typeof structure[0];

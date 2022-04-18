@@ -15,10 +15,10 @@ const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
         justifyContent="center"
         direction={['column', 'row']}
       >
-        {familyIds.map((fId) => {
+        {familyIds.map((fId, idx) => {
           return (
             <Radio key={fId} value={fId}>
-              {fId}
+              Family {fId}
             </Radio>
           );
         })}

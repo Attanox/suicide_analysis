@@ -9,7 +9,7 @@ type BarData = BarDatum[];
 
 export const getBarData = (
   attributes: Attributes,
-  attribute: K | ''
+  attribute: Array<K | ''>
 ): BarData => {
   const familyData: {
     [key: string]: any;
@@ -19,25 +19,32 @@ export const getBarData = (
     if (a.kindred in familyData) {
       familyData[a.kindred].suicides = familyData[a.kindred].suicides + 1;
 
-      if (attribute && a[attribute]) {
-        const addTo = familyData[a.kindred][attribute] || 0;
-        familyData[a.kindred][attribute] = addTo + 1;
-      }
+      attribute.forEach((attr) => {
+        if (attr && a[attr]) {
+          const addTo = familyData[a.kindred][attr] || 0;
+          familyData[a.kindred][attr] = addTo + 1;
+        }
+      });
     } else {
       familyData[a.kindred] = {};
       familyData[a.kindred].suicides = 1;
 
-      if (attribute && a[attribute]) {
-        familyData[a.kindred][attribute] = 1;
-      }
+      attribute.forEach((attr) => {
+        if (attr && a[attr]) {
+          familyData[a.kindred][attr] = 1;
+        }
+      });
     }
   });
 
   return Object.keys(familyData).map((k) => {
-    return {
+    const result: any = {
       familyId: k,
       suicides: familyData[k].suicides,
-      [attribute]: familyData[k][attribute],
     };
+    attribute.forEach((attr) => {
+      result[attr] = familyData[k][attr];
+    });
+    return result;
   });
 };

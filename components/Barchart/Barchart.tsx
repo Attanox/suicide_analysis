@@ -6,7 +6,7 @@ import { Attributes, K } from '../../types';
 
 type LocalProps = {
   attributes: Attributes;
-  attribute: K | '';
+  attribute: Array<K | ''>;
 };
 
 const Barchart = ({ attribute, attributes }: LocalProps) => {
@@ -16,7 +16,7 @@ const Barchart = ({ attribute, attributes }: LocalProps) => {
     <Box width="100%" height={`calc(100vh - 50px)`} marginTop="20px">
       <ResponsiveBar
         data={barData}
-        keys={['suicides', attribute]}
+        keys={['suicides', ...attribute]}
         indexBy="familyId"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
@@ -111,7 +111,7 @@ const Barchart = ({ attribute, attributes }: LocalProps) => {
           },
         ]}
         role="application"
-        ariaLabel="Nivo bar chart demo"
+        ariaLabel="Status of all families"
         // barAriaLabel={function (e) {
         //   return (
         //     e.id + ': ' + e.formattedValue + ' in country: ' + e.indexValue

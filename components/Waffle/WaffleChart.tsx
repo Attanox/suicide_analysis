@@ -10,7 +10,7 @@ type LocalProps = {
   attributes: Attributes;
   familyId: string;
   total: number;
-  attribute: K | '';
+  attribute: Array<K | ''>;
 };
 
 const waffleProps = {
@@ -42,7 +42,7 @@ const WaffleChart = ({
       <Text fontSize="lg" style={{ marginBottom: '10px' }}>
         Current attribute:{' '}
         <Text as="span" fontSize="lg" color="tomato">
-          {attribute}
+          {attribute.join(', ')}
         </Text>
       </Text>
       <Waffle {...waffleProps} data={waffleData} total={total} />
