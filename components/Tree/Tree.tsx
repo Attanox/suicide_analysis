@@ -39,7 +39,7 @@ const TreeChart = ({ nodes }: LocalProps) => {
 
   console.log({ nodes, averageTree });
 
-  const WIDTH = 40;
+  const WIDTH = 30;
   const HEIGHT = 40;
 
   return (

@@ -26,7 +26,7 @@ export async function getStaticProps() {
     props: {
       attributes: getAttributes(),
       familyIds,
-      treeStructure: await getTreeStructure(familyIds[1]),
+      treeStructure: getTreeStructure(familyIds[0]),
     },
   };
 }
@@ -37,15 +37,27 @@ type LocalProps = {
   treeStructure: Node[];
 };
 
+const MAX_SELECTED = 5;
+
 const Home: NextPage<LocalProps> = ({
   attributes,
   familyIds,
   treeStructure,
 }) => {
   const [familyId, setFamilyId] = useState(familyIds[0]);
-  const [attribute, setAttribute] = useState<Array<K | ''>>(['']);
+  const [attribute, setAttribute] = useState<Array<K | ''>>([]);
+  const [familyTree, setFamilyTree] = useState(treeStructure);
 
-  console.log({ treeStructure });
+  const onChangeFamily = (id: string) => {
+    setFamilyId(id);
+    const newTree = getTreeStructure(id);
+    setFamilyTree(newTree);
+  };
+
+  const onChangeAttribute = (newAttr: Array<K | ''>) => {
+    const limited = newAttr.slice(0, MAX_SELECTED);
+    setAttribute(limited);
+  };
 
   return (
     <div className={styles.container}>
@@ -54,20 +66,21 @@ const Home: NextPage<LocalProps> = ({
       </Head>
       <FamilyPicker
         familyIds={familyIds}
-        setFamilyId={setFamilyId}
+        setFamilyId={onChangeFamily}
         familyId={familyId}
       />
       <Box display="flex">
-        <TreeChart nodes={treeStructure} />
+        <TreeChart nodes={familyTree} />
         <AttributePicker
           attributes={Object.keys(attributes[0]) as K[]}
-          setAttribute={setAttribute}
+          setAttribute={onChangeAttribute}
+          selectedAttribute={attribute}
         />
       </Box>
       <Box display="flex" alignItems={'center'}>
         <Heatmap
           attributes={attributes}
-          setAttribute={setAttribute}
+          setAttribute={onChangeAttribute}
           familyId={familyId}
         />
         <WaffleChart

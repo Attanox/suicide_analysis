@@ -16,10 +16,19 @@ type LocalProps = {
 const waffleProps = {
   width: 500,
   height: 500,
-  rows: 15,
-  columns: 15,
-  cellComponent: WaffleCell,
+  // rows: 15,
+  // columns: 15,
+  // cellComponent: WaffleCell,
 };
+
+const SCHEME = [
+  '#ffff99',
+  '#8ECAE6',
+  '#219EBC',
+  '#023047',
+  '#FFB703',
+  '#FB8500',
+];
 
 const WaffleChart = ({
   total,
@@ -29,6 +38,7 @@ const WaffleChart = ({
 }: LocalProps) => {
   const waffleData = getWaffleData(attributes, familyId, attribute);
 
+  console.log({ waffleData, total });
   return (
     <Box
       width="100%"
@@ -45,7 +55,42 @@ const WaffleChart = ({
           {attribute.join(', ')}
         </Text>
       </Text>
-      <Waffle {...waffleProps} data={waffleData} total={total} />
+      <Box display="flex" flexWrap={'wrap'} justifyContent="flex-start">
+        {waffleData.map((r, schemeIdx) => {
+          return (
+            <>
+              {Array(r.value)
+                .fill(0)
+                .map((e, idx) => {
+                  return (
+                    <Box
+                      key={`${e.id}-${idx}`}
+                      width={10}
+                      height={10}
+                      margin={0.5}
+                      backgroundColor={SCHEME[schemeIdx]}
+                      title={`${r.id}: ${r.value}`}
+                    />
+                  );
+                })}
+            </>
+          );
+        })}
+        {Array(total - waffleData[0].value)
+          .fill(0)
+          .map((e, idx) => {
+            return (
+              <Box
+                key={`${e.id}-${idx}`}
+                width={10}
+                height={10}
+                margin={0.5}
+                backgroundColor="#cacaca"
+              />
+            );
+          })}
+      </Box>
+      {/* <Waffle {...waffleProps} data={waffleData} total={total} /> */}
     </Box>
   );
 };

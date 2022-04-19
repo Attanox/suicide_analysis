@@ -30,9 +30,10 @@ export const getWaffleData = (
   }
 
   familyData.forEach((d) => {
-    (Object.keys(d) as K[]).forEach((k) => {
-      if (attribute.includes(k)) {
-        result[1].value += Number(d[k]);
+    attribute.forEach((a) => {
+      const idx = result.findIndex((r) => r.id === a);
+      if (idx !== -1 && a) {
+        result[idx].value += Number(d[a]);
       }
     });
   });

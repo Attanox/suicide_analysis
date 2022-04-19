@@ -50,7 +50,7 @@ export const getAttributes = () => {
 
 const getID = (v: Structure) => `${v.bdate}_${v.sex}`;
 
-export const getTreeStructure = async (familyId: string) => {
+export const getTreeStructure = (familyId: string) => {
   const result: Array<Node> = [];
 
   const marriage: { [key: number]: number } = {};
