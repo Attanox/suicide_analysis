@@ -3,89 +3,37 @@ import { ResponsiveBar } from '@nivo/bar';
 import { Box } from '@chakra-ui/react';
 import { getBarData } from './utils/mapping';
 import { Attributes, K } from '../../types';
+import { getColor } from '../../utils/mapping';
 
 type LocalProps = {
   attributes: Attributes;
-  attribute: Array<K | ''>;
+  selectedAttributes: Array<K | ''>;
 };
 
-const Barchart = ({ attribute, attributes }: LocalProps) => {
-  const barData = getBarData(attributes, attribute);
+const Barchart = ({ selectedAttributes, attributes }: LocalProps) => {
+  const barData = getBarData(attributes, selectedAttributes);
 
   return (
     <Box width="100%" height={`calc(100vh - 50px)`} marginTop="20px">
       <ResponsiveBar
         data={barData}
-        keys={['suicides', ...attribute]}
+        keys={['suicides', ...selectedAttributes]}
         indexBy="familyId"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
         padding={0.3}
         groupMode="grouped"
         valueScale={{ type: 'linear' }}
         indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'nivo' }}
-        defs={[
-          {
-            id: 'dots',
-            type: 'patternDots',
-            background: 'inherit',
-            color: '#38bcb2',
-            size: 4,
-            padding: 1,
-            stagger: true,
-          },
-          {
-            id: 'lines',
-            type: 'patternLines',
-            background: 'inherit',
-            color: '#eed312',
-            rotation: -45,
-            lineWidth: 6,
-            spacing: 10,
-          },
-        ]}
-        fill={[
-          {
-            match: {
-              id: 'suicides',
-            },
-            id: 'dots',
-          },
-          {
-            match: {
-              id: attribute,
-            },
-            id: 'lines',
-          },
-        ]}
+        colors={['#1f1f1f', ...selectedAttributes.map((s) => getColor(s))]}
         borderColor={{
           from: 'color',
           modifiers: [['darker', 1.6]],
         }}
         axisTop={null}
         axisRight={null}
-        // axisBottom={{
-        //   tickSize: 5,
-        //   tickPadding: 5,
-        //   tickRotation: 0,
-        //   legend: 'country',
-        //   legendPosition: 'middle',
-        //   legendOffset: 32,
-        // }}
-        // axisLeft={{
-        //   tickSize: 5,
-        //   tickPadding: 5,
-        //   tickRotation: 0,
-        //   legend: 'food',
-        //   legendPosition: 'middle',
-        //   legendOffset: -40,
-        // }}
         labelSkipWidth={12}
         labelSkipHeight={12}
-        labelTextColor={{
-          from: 'color',
-          modifiers: [['darker', 1.6]],
-        }}
+        labelTextColor={'white'}
         legends={[
           {
             dataFrom: 'keys',

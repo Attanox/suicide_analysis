@@ -27,6 +27,12 @@ export type Attributes = Datum[];
 
 export type Structure = typeof structure[0];
 
-export type TExtNode = ExtNode & { displayId: string };
+export type TExtNode = ExtNode & {
+  displayId: string;
+  attributes: Datum | undefined;
+};
 
-export type TNode = Node & { readonly displayId: string };
+export type TNode = Node & {
+  readonly displayId: string;
+  attributes: Datum | undefined;
+};

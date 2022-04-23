@@ -5,12 +5,13 @@ import { Waffle } from '@nivo/waffle';
 import { Attributes, K } from '../../types';
 import { getWaffleData } from './utils/mapping';
 import WaffleCell from './WaffleCell';
+import { getColor } from '../../utils/mapping';
 
 type LocalProps = {
   attributes: Attributes;
   familyId: string;
   total: number;
-  attribute: Array<K | ''>;
+  selectedAttributes: Array<K | ''>;
 };
 
 const waffleProps = {
@@ -21,22 +22,13 @@ const waffleProps = {
   // cellComponent: WaffleCell,
 };
 
-const SCHEME = [
-  '#ffff99',
-  '#8ECAE6',
-  '#219EBC',
-  '#023047',
-  '#FFB703',
-  '#FB8500',
-];
-
 const WaffleChart = ({
   total,
   attributes,
   familyId,
-  attribute,
+  selectedAttributes,
 }: LocalProps) => {
-  const waffleData = getWaffleData(attributes, familyId, attribute);
+  const waffleData = getWaffleData(attributes, familyId, selectedAttributes);
 
   console.log({ waffleData, total });
   return (
@@ -50,10 +42,23 @@ const WaffleChart = ({
       flexDirection="column"
     >
       <Text fontSize="lg" style={{ marginBottom: '10px' }}>
-        Current attribute:{' '}
-        <Text as="span" fontSize="lg" color="tomato">
-          {attribute.join(', ')}
-        </Text>
+        Current attributes:{' '}
+        {selectedAttributes.map((s) => {
+          return (
+            <React.Fragment key={s}>
+              <Text
+                letterSpacing={1}
+                fontWeight={700}
+                as="span"
+                fontSize="lg"
+                color={getColor(s)}
+              >
+                {s}
+              </Text>
+              ,{' '}
+            </React.Fragment>
+          );
+        })}
       </Text>
       <Box display="flex" flexWrap={'wrap'} justifyContent="flex-start">
         {waffleData.map((r, schemeIdx) => {
@@ -68,7 +73,8 @@ const WaffleChart = ({
                       width={10}
                       height={10}
                       margin={0.5}
-                      backgroundColor={SCHEME[schemeIdx]}
+                      // todo: background
+                      border="5px solid #1f1f1f"
                       title={`${r.id}: ${r.value}`}
                     />
                   );

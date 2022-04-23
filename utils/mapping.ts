@@ -1,4 +1,4 @@
-import type { Attributes, Datum, Structure, TNode } from '../types';
+import type { Attributes, Datum, K, Structure, TNode } from '../types';
 import * as attributes from '../public/attributes.json';
 import * as structure from '../public/structure.json';
 import type { Node } from 'relatives-tree/lib/types';
@@ -25,7 +25,7 @@ export const getAttributes = () => {
       );
 
       return {
-        id: `${matchingStructure?.bdate}_${matchingStructure?.sex}`,
+        id: `${matchingStructure?.bdate}_${matchingStructure?.sex}(${d.personid})`,
         PD: getBool(d['PD']),
         'PD-Cluster B-emotional': getBool(d['PD-Cluster B-emotional']),
         'PD-Cluster C-anxiety': getBool(d['PD-Cluster C-anxiety']),
@@ -85,6 +85,10 @@ export const getTreeStructure = (familyId: string) => {
 
       const id = String(member.RelativeID);
 
+      const matchingAttributes = getAttributes().find(
+        (a) => a.id === `${member?.bdate}_${member?.sex}(${member.personid})`
+      );
+
       n['id'] = id;
       n['displayId'] = getID(member);
 
@@ -116,6 +120,7 @@ export const getTreeStructure = (familyId: string) => {
             };
           })
         : [];
+      n['attributes'] = matchingAttributes;
 
       result.push(n as TNode);
     });
@@ -142,4 +147,26 @@ export const getDisplayAttributes = (attributes: Attributes) => {
   delete firstAttr['kindred'];
   const res = Object.keys(firstAttr);
   return res;
+};
+
+export const getColor = (attribute: Omit<K, 'id' | 'kindred'>) => {
+  const colorMap: { [key: string]: string } = {
+    PD: '#333333',
+    'PD-Cluster B-emotional': '#333333',
+    'PD-Cluster C-anxiety': '#333333',
+    alcohol: '#1a1333',
+    'anxiety-non-trauma': '#262949',
+    asthma: '#045459',
+    'bipolar spectrum illness': '#087353',
+    cardiovascular: '#15c286',
+    depression: '#abd96d',
+    eating: '#fbbf54',
+    'immune-autoimmune': '#ee6b3b',
+    'interpersonal trauma': '#ec0f47',
+    obesity: '#a02c5d',
+    psychosis: '#700460',
+    'somatic disorder': '#022c7a',
+  };
+
+  return colorMap[attribute as string];
 };

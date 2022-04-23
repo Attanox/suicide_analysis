@@ -11,6 +11,9 @@ type LocalProps = {
 const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
   return (
     <RadioGroup
+      position="sticky"
+      top="0"
+      width="100%"
       backgroundColor={'blue.500'}
       color={'white'}
       colorScheme="white"

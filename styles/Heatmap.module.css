@@ -1,0 +1,49 @@
+.container svg > g > g:first-of-type > g > text {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(1) > text {
+  fill: #333333 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(2) > text {
+  fill: #333333 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(3) > text {
+  fill: #333333 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(4) > text {
+  fill: #1a1333 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(5) > text {
+  fill: #262949 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(6) > text {
+  fill: #045459 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(7) > text {
+  fill: #087353 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(8) > text {
+  fill: #15c286 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(9) > text {
+  fill: #abd96d !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(10) > text {
+  fill: #fbbf54 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(11) > text {
+  fill: #ee6b3b !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(12) > text {
+  fill: #ec0f47 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(13) > text {
+  fill: #a02c5d !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(14) > text {
+  fill: #700460 !important;
+}
+.container svg > g > g:first-of-type > g:nth-of-type(15) > text {
+  fill: #022c7a !important;
+}

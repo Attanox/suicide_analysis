@@ -1,11 +1,4 @@
-import { Attributes, Datum } from '../../../types';
-
-type K = keyof Datum;
-
-const colors: { [k: string]: string } = {
-  '1': 'hsl(165, 70%, 50%)',
-  '0': 'hsl(181, 70%, 50%)',
-};
+import { Attributes, Datum, K } from '../../../types';
 
 export const getHeatMapData = (attributes: Attributes, familyId: string) => {
   const result = attributes
@@ -22,7 +15,6 @@ export const getHeatMapData = (attributes: Attributes, familyId: string) => {
           const v = Number(d[k]);
           record = Object.assign(record, {
             [k]: v,
-            [`${k}Color`]: colors[String(v)],
           });
         });
 

@@ -1,18 +1,18 @@
 import { Checkbox, CheckboxGroup, Stack } from '@chakra-ui/react';
 import React from 'react';
 import type { Attributes, K } from '../../types';
-import { getDisplayAttributes } from '../../utils/mapping';
+import { getColor, getDisplayAttributes } from '../../utils/mapping';
 
 type LocalProps = {
   attributes: Attributes;
-  selectedAttribute: Array<K | ''>;
+  selectedAttributes: Array<K | ''>;
   setAttribute: (a: Array<K | ''>) => void;
 };
 
 const AttributePicker = ({
   attributes,
   setAttribute,
-  selectedAttribute,
+  selectedAttributes,
 }: LocalProps) => {
   const displayAttributes = getDisplayAttributes(attributes);
 
@@ -20,7 +20,7 @@ const AttributePicker = ({
     <CheckboxGroup
       colorScheme="blue"
       onChange={(v) => setAttribute(v as Array<K | ''>)}
-      value={selectedAttribute}
+      value={selectedAttributes}
     >
       <Stack
         style={{ minWidth: '200px' }}
@@ -29,7 +29,13 @@ const AttributePicker = ({
       >
         {displayAttributes.map((a) => {
           return (
-            <Checkbox key={a} value={a}>
+            <Checkbox
+              letterSpacing={1}
+              fontWeight={700}
+              color={getColor(a)}
+              key={a}
+              value={a}
+            >
               {a}
             </Checkbox>
           );

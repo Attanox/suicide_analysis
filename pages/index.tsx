@@ -44,7 +44,9 @@ const Home: NextPage<LocalProps> = ({
   treeStructure,
 }) => {
   const [familyId, setFamilyId] = useState(familyIds[2]);
-  const [attribute, setAttribute] = useState<Array<K | ''>>([]);
+  const [selectedAttributes, setSelectedAttributes] = useState<Array<K | ''>>(
+    []
+  );
 
   const onChangeFamily = (id: string) => {
     setFamilyId(id);
@@ -52,7 +54,7 @@ const Home: NextPage<LocalProps> = ({
 
   const onChangeAttribute = (newAttr: Array<K | ''>) => {
     const limited = newAttr.slice(0, MAX_SELECTED);
-    setAttribute(limited);
+    setSelectedAttributes(limited);
   };
 
   return (
@@ -72,12 +74,16 @@ const Home: NextPage<LocalProps> = ({
         justifyContent="space-between"
         alignItems="center"
       >
-        <TreeChart initialNodes={treeStructure} familyId={familyId} />
+        <TreeChart
+          selectedAttributes={selectedAttributes}
+          initialNodes={treeStructure}
+          familyId={familyId}
+        />
         <Box display="inline-block" width="50px" />
         <AttributePicker
           attributes={attributes}
           setAttribute={onChangeAttribute}
-          selectedAttribute={attribute}
+          selectedAttributes={selectedAttributes}
         />
       </Box>
       <Box display="flex" alignItems={'center'}>
@@ -90,11 +96,14 @@ const Home: NextPage<LocalProps> = ({
           total={getTotal(familyId)}
           attributes={attributes}
           familyId={familyId}
-          attribute={attribute}
+          selectedAttributes={selectedAttributes}
         />
       </Box>
       <Box display="flex" alignItems={'center'}>
-        <Barchart attributes={attributes} attribute={attribute} />
+        <Barchart
+          attributes={attributes}
+          selectedAttributes={selectedAttributes}
+        />
       </Box>
     </div>
   );
