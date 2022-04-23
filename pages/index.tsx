@@ -15,8 +15,7 @@ import {
 } from '../utils/mapping';
 
 import type { NextPage } from 'next';
-import type { Attributes, K, Structure } from '../types';
-import type { Node } from 'relatives-tree/lib/types';
+import type { Attributes, K, Structure, TNode } from '../types';
 import AttributePicker from '../components/AttributePicker/AttributePicker';
 
 export async function getStaticProps() {
@@ -26,7 +25,7 @@ export async function getStaticProps() {
     props: {
       attributes: getAttributes(),
       familyIds,
-      treeStructure: getTreeStructure(familyIds[0]),
+      treeStructure: getTreeStructure(familyIds[2]),
     },
   };
 }
@@ -34,7 +33,7 @@ export async function getStaticProps() {
 type LocalProps = {
   attributes: Attributes;
   familyIds: string[];
-  treeStructure: Node[];
+  treeStructure: TNode[];
 };
 
 const MAX_SELECTED = 5;
@@ -44,14 +43,11 @@ const Home: NextPage<LocalProps> = ({
   familyIds,
   treeStructure,
 }) => {
-  const [familyId, setFamilyId] = useState(familyIds[0]);
+  const [familyId, setFamilyId] = useState(familyIds[2]);
   const [attribute, setAttribute] = useState<Array<K | ''>>([]);
-  const [familyTree, setFamilyTree] = useState(treeStructure);
 
   const onChangeFamily = (id: string) => {
     setFamilyId(id);
-    const newTree = getTreeStructure(id);
-    setFamilyTree(newTree);
   };
 
   const onChangeAttribute = (newAttr: Array<K | ''>) => {
@@ -69,10 +65,17 @@ const Home: NextPage<LocalProps> = ({
         setFamilyId={onChangeFamily}
         familyId={familyId}
       />
-      <Box display="flex">
-        <TreeChart nodes={familyTree} />
+      <Box display="block" height="1em" width="100%" />
+      <Box
+        display="flex"
+        height={`calc(100vh - 50px)`}
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <TreeChart initialNodes={treeStructure} familyId={familyId} />
+        <Box display="inline-block" width="50px" />
         <AttributePicker
-          attributes={Object.keys(attributes[0]) as K[]}
+          attributes={attributes}
           setAttribute={onChangeAttribute}
           selectedAttribute={attribute}
         />

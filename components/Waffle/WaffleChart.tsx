@@ -58,7 +58,7 @@ const WaffleChart = ({
       <Box display="flex" flexWrap={'wrap'} justifyContent="flex-start">
         {waffleData.map((r, schemeIdx) => {
           return (
-            <>
+            <React.Fragment key={`${r.id}-${schemeIdx}`}>
               {Array(r.value)
                 .fill(0)
                 .map((e, idx) => {
@@ -73,7 +73,7 @@ const WaffleChart = ({
                     />
                   );
                 })}
-            </>
+            </React.Fragment>
           );
         })}
         {Array(total - waffleData[0].value)

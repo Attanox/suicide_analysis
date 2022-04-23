@@ -3,6 +3,7 @@ import { Attributes, K } from '../../types';
 import { getHeatMapData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
+import { getDisplayAttributes } from '../../utils/mapping';
 
 type LocalProps = {
   attributes: Attributes;
@@ -13,11 +14,7 @@ type LocalProps = {
 const Heatmap = (props: LocalProps) => {
   const heatMapData = getHeatMapData(props.attributes, props.familyId);
 
-  const firstObj: any = { ...props.attributes[0] };
-  delete firstObj['id'];
-  delete firstObj['kindred'];
-  delete firstObj['suicide'];
-  const keys = Object.keys(firstObj);
+  const keys = getDisplayAttributes(props.attributes);
 
   return (
     <Box width="100%" height={`calc(100vh - 50px)`} marginTop="20px">
@@ -58,4 +55,8 @@ const Heatmap = (props: LocalProps) => {
   );
 };
 
-export default Heatmap;
+const areEqual = (prevProps: LocalProps, nextProps: LocalProps) => {
+  return prevProps.familyId === nextProps.familyId;
+};
+
+export default React.memo(Heatmap, areEqual);

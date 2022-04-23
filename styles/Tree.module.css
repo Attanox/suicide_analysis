@@ -42,3 +42,34 @@
 .sub.female {
   background: #a4ecff;
 }
+
+.tree {
+  max-width: 100%;
+  box-sizing: content-box;
+  padding-bottom: 20px;
+  overflow-x: scroll;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* width */
+.tree::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Track */
+.tree::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.tree::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+.tree::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

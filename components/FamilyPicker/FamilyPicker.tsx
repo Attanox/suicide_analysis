@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react';
+import { getTotal } from '../../utils/mapping';
 
 type LocalProps = {
   familyIds: string[];
@@ -9,7 +10,17 @@ type LocalProps = {
 
 const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
   return (
-    <RadioGroup colorScheme="green" onChange={setFamilyId} value={familyId}>
+    <RadioGroup
+      backgroundColor={'blue.500'}
+      color={'white'}
+      colorScheme="white"
+      borderRadius={'0 0 10px 10px'}
+      paddingTop="3"
+      paddingBottom="3"
+      zIndex={'sticky'}
+      onChange={setFamilyId}
+      value={familyId}
+    >
       <Stack
         spacing={[1, 5]}
         justifyContent="center"
@@ -18,7 +29,7 @@ const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
         {familyIds.map((fId, idx) => {
           return (
             <Radio key={fId} value={fId}>
-              Family {fId}
+              Family {fId} ({getTotal(fId)})
             </Radio>
           );
         })}

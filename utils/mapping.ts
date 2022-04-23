@@ -1,4 +1,4 @@
-import type { Attributes, Structure } from '../types';
+import type { Attributes, Datum, Structure, TNode } from '../types';
 import * as attributes from '../public/attributes.json';
 import * as structure from '../public/structure.json';
 import type { Node } from 'relatives-tree/lib/types';
@@ -51,57 +51,74 @@ export const getAttributes = () => {
 const getID = (v: Structure) => `${v.bdate}_${v.sex}`;
 
 export const getTreeStructure = (familyId: string) => {
-  const result: Array<Node> = [];
+  const result: Array<TNode> = [];
 
-  const marriage: { [key: number]: number } = {};
+  const marriage: { [key: number]: Set<number> } = {};
   const family = structure.filter((s) => String(s.KindredID) === familyId);
 
   family.forEach((member) => {
     if (member.PaID && member.MaID) {
-      marriage[member.PaID] = member.MaID;
-      marriage[member.MaID] = member.PaID;
+      if (marriage[member.PaID]) {
+        marriage[member.PaID] = marriage[member.PaID].add(member.MaID);
+      } else {
+        marriage[member.PaID] = new Set([member.MaID]);
+      }
+      if (marriage[member.MaID]) {
+        marriage[member.MaID] = marriage[member.MaID].add(member.PaID);
+      } else {
+        marriage[member.MaID] = new Set([member.PaID]);
+      }
     }
   });
 
-  family.forEach((member) => {
-    const n: { [key: string]: any } = {};
+  family
+    .sort((a, b) => {
+      const aBirth = a.bdate;
+      const bBirth = b.bdate;
 
-    const spouse = marriage[member.RelativeID];
+      return aBirth > bBirth ? 1 : -1;
+    })
+    .forEach((member) => {
+      const n: { [key: string]: any } = {};
 
-    const id = member.RelativeID;
+      const spouse = marriage[member.RelativeID];
 
-    n['id'] = id;
-    n['displayId'] = getID(member);
+      const id = String(member.RelativeID);
 
-    n['gender'] = `${member?.sex === 'M' ? 'male' : 'female'}`;
-    n['parents'] = [];
-    if (member.PaID) n['parents'].push({ id: `${member.PaID}`, type: 'blood' });
-    if (member.MaID) n['parents'].push({ id: `${member.MaID}`, type: 'blood' });
+      n['id'] = id;
+      n['displayId'] = getID(member);
 
-    n['children'] = family
-      .filter(
-        (m) => m.MaID === member.RelativeID || m.PaID === member.RelativeID
-      )
-      .map((m) => ({ id: m.RelativeID, type: 'blood' }));
-    n['siblings'] = family
-      .filter(
-        (m) =>
-          ((m.MaID && m.MaID === member.MaID) ||
-            (m.PaID && m.PaID === member.PaID)) &&
-          m.RelativeID !== member.RelativeID
-      )
-      .map((m) => ({ id: m.RelativeID, type: 'blood' }));
-    n['spouses'] = spouse
-      ? [
-          {
-            id: spouse,
-            type: 'married',
-          },
-        ]
-      : [];
+      n['gender'] = `${member?.sex === 'M' ? 'male' : 'female'}`;
+      n['parents'] = [];
+      if (member.PaID)
+        n['parents'].push({ id: `${member.PaID}`, type: 'blood' });
+      if (member.MaID)
+        n['parents'].push({ id: `${member.MaID}`, type: 'blood' });
 
-    result.push(n as Node);
-  });
+      n['children'] = family
+        .filter(
+          (m) => m.MaID === member.RelativeID || m.PaID === member.RelativeID
+        )
+        .map((m) => ({ id: String(m.RelativeID), type: 'blood' }));
+      n['siblings'] = family
+        .filter(
+          (m) =>
+            ((m.MaID && m.MaID === member.MaID) ||
+              (m.PaID && m.PaID === member.PaID)) &&
+            m.RelativeID !== member.RelativeID
+        )
+        .map((m) => ({ id: String(m.RelativeID), type: 'blood' }));
+      n['spouses'] = spouse
+        ? Array.from(spouse).map((s) => {
+            return {
+              id: String(s),
+              type: 'married',
+            };
+          })
+        : [];
+
+      result.push(n as TNode);
+    });
 
   return result;
 };
@@ -116,4 +133,13 @@ export const getFamilyIds = () => {
 
 export const getTotal = (familyId: string) => {
   return structure.filter((d) => String(d['KindredID']) === familyId).length;
+};
+
+export const getDisplayAttributes = (attributes: Attributes) => {
+  const firstAttr: Partial<Pick<Datum, 'id' | 'kindred'>> &
+    Omit<Datum, 'id' | 'kindred'> = { ...attributes[0] };
+  delete firstAttr['id'];
+  delete firstAttr['kindred'];
+  const res = Object.keys(firstAttr);
+  return res;
 };

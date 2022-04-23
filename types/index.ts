@@ -1,4 +1,5 @@
 import * as structure from '../public/structure.json';
+import type { ExtNode, Node } from 'relatives-tree/lib/types';
 
 export type Datum = {
   PD: boolean;
@@ -25,3 +26,7 @@ export type K = keyof Datum;
 export type Attributes = Datum[];
 
 export type Structure = typeof structure[0];
+
+export type TExtNode = ExtNode & { displayId: string };
+
+export type TNode = Node & { readonly displayId: string };

@@ -1,6 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React from 'react';
-import type { ExtNode, Node } from 'relatives-tree/lib/types';
+import React, { useEffect, useState } from 'react';
 
 import averageTree from 'relatives-tree/samples/average-tree.json';
 
@@ -8,18 +7,27 @@ import dynamic from 'next/dynamic';
 
 import styles from '../../styles/Tree.module.css';
 import classNames from 'classnames';
+import { getTreeStructure } from '../../utils/mapping';
+import { TExtNode, TNode } from '../../types';
 
 const ReactFamilyTree = dynamic(import('react-family-tree'), { ssr: false });
 
 type TFamilyNode = {
-  node: ExtNode;
+  node: TExtNode;
+  isRoot: boolean;
   style?: React.CSSProperties;
 };
 
-const FamilyNode = ({ node, style }: TFamilyNode) => {
+const FamilyNode = ({ node, style, isRoot }: TFamilyNode) => {
   return (
-    <div style={style} title={node.id}>
-      {/* <div className={classNames(styles.inner, styles[node.gender])} /> */}
+    <div className={styles.root} style={style} title={node.id}>
+      <div
+        className={classNames(
+          styles.inner,
+          styles[node.gender],
+          isRoot && styles.isRoot
+        )}
+      />
       {/* {node.hasSubTree && (
         <div
           className={classNames(styles.sub, styles[node.gender])}
@@ -31,28 +39,46 @@ const FamilyNode = ({ node, style }: TFamilyNode) => {
 };
 
 type LocalProps = {
-  nodes: Node[];
+  initialNodes: TNode[];
+  familyId: string;
 };
 
-const TreeChart = ({ nodes }: LocalProps) => {
+const WIDTH = 30;
+const HEIGHT = 40;
+
+const getRootId = (nodes: TNode[]) => {
+  const res = nodes.find((n) => n.displayId.split('_')[0] !== '');
+
+  return res?.id || '';
+};
+
+const TreeChart = ({ initialNodes, familyId }: LocalProps) => {
+  const [nodes, setNodes] = useState(initialNodes);
+  const [rootId, setRootId] = useState(getRootId(initialNodes));
+
+  useEffect(() => {
+    const newTree = getTreeStructure(familyId);
+    setNodes(newTree);
+    setRootId(getRootId(newTree));
+  }, [familyId]);
+
   if (typeof window === 'undefined') return null;
 
-  console.log({ nodes, averageTree });
-
-  const WIDTH = 30;
-  const HEIGHT = 40;
+  console.log({ nodes });
 
   return (
-    <Box width="100%" height={`calc(100vh - 50px)`} marginTop="20px">
-      <ReactFamilyTree
-        nodes={nodes as Node[]}
-        rootId={nodes[0].id}
-        width={WIDTH}
-        height={HEIGHT}
-        renderNode={(node: ExtNode) => (
+    <ReactFamilyTree
+      nodes={nodes}
+      rootId={rootId}
+      width={WIDTH}
+      height={HEIGHT}
+      className={styles.tree}
+      renderNode={(node) => {
+        return (
           <FamilyNode
             key={node.id}
-            node={node}
+            node={node as TExtNode}
+            isRoot={node.id === rootId}
             style={{
               width: WIDTH,
               height: HEIGHT,
@@ -61,9 +87,9 @@ const TreeChart = ({ nodes }: LocalProps) => {
               }px)`,
             }}
           />
-        )}
-      />
-    </Box>
+        );
+      }}
+    />
   );
 };
 
