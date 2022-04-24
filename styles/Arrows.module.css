@@ -63,29 +63,29 @@
 }
 
 .waffleUp {
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
 
-  border-bottom: 15px solid transparent;
+  border-bottom: 11px solid transparent;
 }
 
 .waffleDown {
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
 
-  border-top: 15px solid transparent;
+  border-top: 11px solid transparent;
 }
 
 .waffleRight {
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
 
-  border-left: 15px solid transparent;
+  border-left: 11px solid transparent;
 }
 
 .waffleLeft {
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
 
-  border-right: 15px solid transparent;
+  border-right: 11px solid transparent;
 }

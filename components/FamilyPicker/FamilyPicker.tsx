@@ -14,12 +14,14 @@ const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
       position="sticky"
       top="0"
       width="100%"
-      backgroundColor={'blue.500'}
+      backgroundColor={'blue.700'}
       color={'white'}
-      colorScheme="white"
+      colorScheme="whiteAlpha"
       borderRadius={'0 0 10px 10px'}
       paddingTop="3"
       paddingBottom="3"
+      paddingLeft="2"
+      paddingRight="2"
       zIndex={'sticky'}
       onChange={setFamilyId}
       value={familyId}
@@ -31,7 +33,7 @@ const FamilyPicker = ({ familyIds, familyId, setFamilyId }: LocalProps) => {
       >
         {familyIds.map((fId, idx) => {
           return (
-            <Radio key={fId} value={fId}>
+            <Radio size="sm" key={fId} value={fId}>
               Family {fId} ({getTotal(fId)})
             </Radio>
           );

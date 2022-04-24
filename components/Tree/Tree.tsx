@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Tooltip } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 
 import averageTree from 'relatives-tree/samples/average-tree.json';
@@ -31,29 +31,31 @@ const FamilyNode = ({
 }: TFamilyNode) => {
   return (
     <div className={styles.root} style={style} title={node.id}>
-      <div
-        className={classNames(
-          styles.inner,
-          styles[node.gender],
-          isRoot && styles.isRoot
-        )}
-        onClick={() => onSubClick(node.id)}
-        style={
-          node.attributes
-            ? {
-                border: '3px solid #333',
-                borderRadius: '0px',
-                position: 'relative',
-              }
-            : { position: 'relative' }
-        }
-      >
-        <Quarters
-          selectedAttributes={selectedAttributes}
-          nodeAttributes={node.attributes}
-          arrowClass="tree"
-        />
-      </div>
+      <Tooltip label={`${node.displayId}`} hasArrow>
+        <div
+          className={classNames(
+            styles.inner,
+            styles[node.gender],
+            isRoot && styles.isRoot
+          )}
+          onClick={() => onSubClick(node.id)}
+          style={
+            node.attributes
+              ? {
+                  border: '3px solid #333',
+                  borderRadius: '0px',
+                  position: 'relative',
+                }
+              : { position: 'relative' }
+          }
+        >
+          <Quarters
+            selectedAttributes={selectedAttributes}
+            nodeAttributes={node.attributes}
+            arrowClass="tree"
+          />
+        </div>
+      </Tooltip>
     </div>
   );
 };
@@ -97,14 +99,7 @@ const TreeChart = ({
   if (typeof window === 'undefined') return null;
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        maxWidth: 'calc(100% - 220px)',
-        marginRight: '50px',
-      }}
-    >
+    <>
       <ReactFamilyTree
         nodes={nodes}
         rootId={rootId}
@@ -136,7 +131,7 @@ const TreeChart = ({
           Reset
         </div>
       )}
-    </div>
+    </>
   );
 };
 

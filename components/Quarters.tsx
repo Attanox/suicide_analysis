@@ -52,7 +52,7 @@ const Quarters = ({
       {selectedAttributes.map((s, idx) => {
         if (nodeAttributes && nodeAttributes[s as K]) {
           const Quarter = getQuarter(idx, getColor(s), arrowClass);
-          return <Quarter key={`${nodeAttributes.id}`} />;
+          return <Quarter key={`${s}-${nodeAttributes.id}`} />;
         }
         return null;
       })}

@@ -56,7 +56,6 @@ const WaffleChart = ({
 
   const sortedAttributes = getSortedAttributes(selectedAttributes, familyData);
 
-  console.log({ waffleData, familyData, sortedAttributes });
   return (
     <Box
       width="100%"
@@ -70,6 +69,7 @@ const WaffleChart = ({
       <Text fontSize="lg" style={{ marginBottom: '10px' }}>
         Current attributes:{' '}
         {selectedAttributes.map((s) => {
+          const wd = waffleData.find((w) => w.id === s);
           return (
             <React.Fragment key={s}>
               <Text
@@ -79,7 +79,7 @@ const WaffleChart = ({
                 fontSize="lg"
                 color={getColor(s)}
               >
-                {s}
+                {s} {wd && `(${wd.value})`}
               </Text>
               ,{' '}
             </React.Fragment>
@@ -87,42 +87,35 @@ const WaffleChart = ({
         })}
       </Text>
       <Box display="flex" flexWrap={'wrap'} justifyContent="flex-start">
-        {waffleData.map((r, schemeIdx) => {
-          if (!r.value) return null;
-          return (
-            <React.Fragment key={`${r.id}-${schemeIdx}`}>
-              {Array(r.value)
-                .fill(0)
-                .map((e, idx) => {
-                  return (
-                    <Box
-                      key={`${e.id}-${idx}`}
-                      width={10}
-                      height={10}
-                      margin={0.5}
-                      border="5px solid #1f1f1f"
-                      title={`${r.id}: ${r.value}`}
-                      position="relative"
-                    >
-                      <Quarters
-                        nodeAttributes={sortedAttributes[idx]}
-                        selectedAttributes={selectedAttributes}
-                        arrowClass="waffle"
-                      />
-                    </Box>
-                  );
-                })}
-            </React.Fragment>
-          );
-        })}
+        {Array(waffleData[0].value)
+          .fill(0)
+          .map((e, idx) => {
+            return (
+              <Box
+                key={`${e.id}-${idx}`}
+                width={7}
+                height={7}
+                margin={0.5}
+                border="3px solid #1f1f1f"
+                title={`${waffleData[0].id}: ${waffleData[0].value}`}
+                position="relative"
+              >
+                <Quarters
+                  nodeAttributes={sortedAttributes[idx]}
+                  selectedAttributes={selectedAttributes}
+                  arrowClass="waffle"
+                />
+              </Box>
+            );
+          })}
         {Array(total - waffleData[0].value)
           .fill(0)
           .map((e, idx) => {
             return (
               <Box
                 key={`${e.id}-${idx}`}
-                width={10}
-                height={10}
+                width={7}
+                height={7}
                 margin={0.5}
                 backgroundColor="#cacaca"
               />

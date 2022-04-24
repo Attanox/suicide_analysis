@@ -97,7 +97,7 @@ const Heatmap = (props: LocalProps) => {
         motionDamping={9}
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
-        onClick={(data) => {
+        onClick={(data, event) => {
           props.setAttribute([data.xKey as K]);
         }}
         tooltip={({ xKey, yKey, value }) => (

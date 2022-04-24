@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Barchart from '../components/Barchart/Barchart';
 import FamilyPicker from '../components/FamilyPicker/FamilyPicker';
 import Heatmap from '../components/Heatmap/Heatmap';
@@ -50,6 +50,7 @@ const Home: NextPage<LocalProps> = ({
 
   const onChangeFamily = (id: string) => {
     setFamilyId(id);
+    setSelectedAttributes([]);
   };
 
   const onChangeAttribute = (newAttr: Array<K | ''>) => {
