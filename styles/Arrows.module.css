@@ -1,0 +1,91 @@
+.arrowUp {
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.arrowDown {
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.arrowRight {
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.arrowLeft {
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.treeUp {
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+
+  border-bottom: 22px solid transparent;
+}
+
+.treeDown {
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+
+  border-top: 22px solid transparent;
+}
+
+.treeRight {
+  border-top: 22px solid transparent;
+  border-bottom: 22px solid transparent;
+
+  border-left: 22px solid transparent;
+}
+
+.treeLeft {
+  border-top: 22px solid transparent;
+  border-bottom: 22px solid transparent;
+
+  border-right: 22px solid transparent;
+}
+
+.waffleUp {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+
+  border-bottom: 15px solid transparent;
+}
+
+.waffleDown {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+
+  border-top: 15px solid transparent;
+}
+
+.waffleRight {
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+
+  border-left: 15px solid transparent;
+}
+
+.waffleLeft {
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+
+  border-right: 15px solid transparent;
+}

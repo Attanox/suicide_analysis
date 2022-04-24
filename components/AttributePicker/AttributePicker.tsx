@@ -23,7 +23,12 @@ const AttributePicker = ({
       value={selectedAttributes}
     >
       <Stack
-        style={{ minWidth: '200px' }}
+        style={{
+          width: '200px',
+          marginLeft: 'auto',
+          // boxSizing: 'content-box',
+          // paddingLeft: '50px',
+        }}
         spacing={[1, 5]}
         direction={['column']}
       >

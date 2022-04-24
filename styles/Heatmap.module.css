@@ -3,47 +3,47 @@
   letter-spacing: 1px;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(1) > text {
-  fill: #333333 !important;
+  fill: var(--PD) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(2) > text {
-  fill: #333333 !important;
+  fill: var(--PD-Cluster-B-emotional) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(3) > text {
-  fill: #333333 !important;
+  fill: var(--PD-Cluster-C-anxiety) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(4) > text {
-  fill: #1a1333 !important;
+  fill: var(--alcohol) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(5) > text {
-  fill: #262949 !important;
+  fill: var(--anxiety-non-trauma) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(6) > text {
-  fill: #045459 !important;
+  fill: var(--asthma) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(7) > text {
-  fill: #087353 !important;
+  fill: var(--bipolar-spectrum-illness) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(8) > text {
-  fill: #15c286 !important;
+  fill: var(--cardiovascular) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(9) > text {
-  fill: #abd96d !important;
+  fill: var(--depression) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(10) > text {
-  fill: #fbbf54 !important;
+  fill: var(--eating) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(11) > text {
-  fill: #ee6b3b !important;
+  fill: var(--immune-autoimmune) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(12) > text {
-  fill: #ec0f47 !important;
+  fill: var(--interpersonal-trauma) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(13) > text {
-  fill: #a02c5d !important;
+  fill: var(--obesity) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(14) > text {
-  fill: #700460 !important;
+  fill: var(--psychosis) !important;
 }
 .container svg > g > g:first-of-type > g:nth-of-type(15) > text {
-  fill: #022c7a !important;
+  fill: var(--somatic-disorder) !important;
 }

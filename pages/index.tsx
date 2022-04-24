@@ -25,7 +25,7 @@ export async function getStaticProps() {
     props: {
       attributes: getAttributes(),
       familyIds,
-      treeStructure: getTreeStructure(familyIds[2]),
+      treeStructure: getTreeStructure(familyIds[0]),
     },
   };
 }
@@ -36,14 +36,14 @@ type LocalProps = {
   treeStructure: TNode[];
 };
 
-const MAX_SELECTED = 5;
+const MAX_SELECTED = 4;
 
 const Home: NextPage<LocalProps> = ({
   attributes,
   familyIds,
   treeStructure,
 }) => {
-  const [familyId, setFamilyId] = useState(familyIds[2]);
+  const [familyId, setFamilyId] = useState(familyIds[0]);
   const [selectedAttributes, setSelectedAttributes] = useState<Array<K | ''>>(
     []
   );
@@ -68,18 +68,12 @@ const Home: NextPage<LocalProps> = ({
         familyId={familyId}
       />
       <Box display="block" height="1em" width="100%" />
-      <Box
-        display="flex"
-        height={`calc(100vh - 50px)`}
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <Box display="flex" height={`calc(100vh - 50px)`} alignItems="center">
         <TreeChart
           selectedAttributes={selectedAttributes}
           initialNodes={treeStructure}
           familyId={familyId}
         />
-        <Box display="inline-block" width="50px" />
         <AttributePicker
           attributes={attributes}
           setAttribute={onChangeAttribute}

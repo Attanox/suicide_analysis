@@ -58,7 +58,7 @@
 .reset {
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: -30px;
   padding: 4px 10px;
   background: #fff;
   border: 1px solid #ddd;

@@ -7,8 +7,9 @@ import dynamic from 'next/dynamic';
 
 import styles from '../../styles/Tree.module.css';
 import classNames from 'classnames';
-import { getTreeStructure } from '../../utils/mapping';
+import { getColor, getTreeStructure } from '../../utils/mapping';
 import { K, TExtNode, TNode } from '../../types';
+import Quarters from '../Quarters';
 
 const ReactFamilyTree = dynamic(import('react-family-tree'), { ssr: false });
 
@@ -42,16 +43,16 @@ const FamilyNode = ({
             ? {
                 border: '3px solid #333',
                 borderRadius: '0px',
+                position: 'relative',
               }
-            : {}
+            : { position: 'relative' }
         }
       >
-        {selectedAttributes.map((s) => {
-          if (node.attributes && node.attributes[s as K]) {
-            return <span>{s}</span>;
-          }
-          return null;
-        })}
+        <Quarters
+          selectedAttributes={selectedAttributes}
+          nodeAttributes={node.attributes}
+          arrowClass="tree"
+        />
       </div>
     </div>
   );
@@ -101,6 +102,7 @@ const TreeChart = ({
         position: 'relative',
         width: '100%',
         maxWidth: 'calc(100% - 220px)',
+        marginRight: '50px',
       }}
     >
       <ReactFamilyTree

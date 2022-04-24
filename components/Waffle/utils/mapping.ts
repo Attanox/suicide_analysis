@@ -16,27 +16,27 @@ export const getWaffleData = (
     },
   ];
 
-  if (attribute) {
-    attribute.forEach((a) => {
-      if (a) {
-        result.push({
-          id: a,
-          label: a,
-          value: 0,
-          color: '#a053f0',
-        });
-      }
-    });
-  }
+  // if (attribute) {
+  //   attribute.forEach((a) => {
+  //     if (a) {
+  //       result.push({
+  //         id: a,
+  //         label: a,
+  //         value: 0,
+  //         color: '#a053f0',
+  //       });
+  //     }
+  //   });
+  // }
 
-  familyData.forEach((d) => {
-    attribute.forEach((a) => {
-      const idx = result.findIndex((r) => r.id === a);
-      if (idx !== -1 && a) {
-        result[idx].value += Number(d[a]);
-      }
-    });
-  });
+  // familyData.forEach((d) => {
+  //   attribute.forEach((a) => {
+  //     const idx = result.findIndex((r) => r.id === a);
+  //     if (idx !== -1 && a) {
+  //       result[idx].value += Number(d[a]);
+  //     }
+  //   });
+  // });
 
   return result;
 };

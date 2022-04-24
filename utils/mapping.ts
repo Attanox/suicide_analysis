@@ -120,7 +120,7 @@ export const getTreeStructure = (familyId: string) => {
             };
           })
         : [];
-      n['attributes'] = matchingAttributes;
+      n['attributes'] = matchingAttributes || null;
 
       result.push(n as TNode);
     });
@@ -151,21 +151,21 @@ export const getDisplayAttributes = (attributes: Attributes) => {
 
 export const getColor = (attribute: Omit<K, 'id' | 'kindred'>) => {
   const colorMap: { [key: string]: string } = {
-    PD: '#333333',
-    'PD-Cluster B-emotional': '#333333',
-    'PD-Cluster C-anxiety': '#333333',
-    alcohol: '#1a1333',
-    'anxiety-non-trauma': '#262949',
-    asthma: '#045459',
-    'bipolar spectrum illness': '#087353',
-    cardiovascular: '#15c286',
-    depression: '#abd96d',
-    eating: '#fbbf54',
-    'immune-autoimmune': '#ee6b3b',
-    'interpersonal trauma': '#ec0f47',
-    obesity: '#a02c5d',
-    psychosis: '#700460',
-    'somatic disorder': '#022c7a',
+    PD: 'var(--PD)',
+    'PD-Cluster B-emotional': 'var(--PD-Cluster-B-emotional)',
+    'PD-Cluster C-anxiety': 'var(--PD-Cluster-C-anxiety)',
+    alcohol: 'var(--alcohol)',
+    'anxiety-non-trauma': 'var(--anxiety-non-trauma)',
+    asthma: 'var(--asthma)',
+    'bipolar spectrum illness': 'var(--bipolar-spectrum-illness)',
+    cardiovascular: 'var(--cardiovascular)',
+    depression: 'var(--depression)',
+    eating: 'var(--eating)',
+    'immune-autoimmune': 'var(--immune-autoimmune)',
+    'interpersonal trauma': 'var(--interpersonal-trauma)',
+    obesity: 'var(--obesity)',
+    psychosis: 'var(--psychosis)',
+    'somatic disorder': 'var(--somatic-disorder)',
   };
 
   return colorMap[attribute as string];

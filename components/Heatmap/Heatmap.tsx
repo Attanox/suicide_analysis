@@ -40,11 +40,13 @@ const CustomCell = ({
       <rect
         width={width}
         height={height}
+        x={0}
+        y={0}
         fill={getCellColor(data.value)}
         strokeWidth={borderWidth}
         stroke={borderColor}
         opacity={opacity}
-        onClick={onClick}
+        onClick={(event) => onClick(data, event)}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
       />
@@ -95,9 +97,9 @@ const Heatmap = (props: LocalProps) => {
         motionDamping={9}
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
-        onClick={(datum, event) =>
-          props.setAttribute([String(datum.xKey) as K])
-        }
+        onClick={(data) => {
+          props.setAttribute([data.xKey as K]);
+        }}
         tooltip={({ xKey, yKey, value }) => (
           <strong style={{ color: getCellColor(value) }}>
             {xKey} / {yKey}: {value}

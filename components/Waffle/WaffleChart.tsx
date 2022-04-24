@@ -2,10 +2,11 @@ import * as React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import { Waffle } from '@nivo/waffle';
 
-import { Attributes, K } from '../../types';
+import { Attributes, Datum, K } from '../../types';
 import { getWaffleData } from './utils/mapping';
 import WaffleCell from './WaffleCell';
 import { getColor } from '../../utils/mapping';
+import Quarters from '../Quarters';
 
 type LocalProps = {
   attributes: Attributes;
@@ -22,6 +23,27 @@ const waffleProps = {
   // cellComponent: WaffleCell,
 };
 
+const getSortedAttributes = (
+  selectedAttributes: Array<K | ''>,
+  familyData: Datum[]
+) => {
+  let res = familyData;
+
+  const compare = (a: Datum, b: Datum, s: K | '') => {
+    if (s && Number(a[s]) < Number(b[s])) return -1;
+    if (s && Number(a[s]) > Number(b[s])) return 1;
+    return 0;
+  };
+
+  selectedAttributes.forEach((s) => {
+    if (s) {
+      res = res.sort((a, b) => compare(a, b, s));
+    }
+  });
+
+  return res;
+};
+
 const WaffleChart = ({
   total,
   attributes,
@@ -30,7 +52,11 @@ const WaffleChart = ({
 }: LocalProps) => {
   const waffleData = getWaffleData(attributes, familyId, selectedAttributes);
 
-  console.log({ waffleData, total });
+  const familyData = attributes.filter((d) => d.kindred === familyId);
+
+  const sortedAttributes = getSortedAttributes(selectedAttributes, familyData);
+
+  console.log({ waffleData, familyData, sortedAttributes });
   return (
     <Box
       width="100%"
@@ -62,6 +88,7 @@ const WaffleChart = ({
       </Text>
       <Box display="flex" flexWrap={'wrap'} justifyContent="flex-start">
         {waffleData.map((r, schemeIdx) => {
+          if (!r.value) return null;
           return (
             <React.Fragment key={`${r.id}-${schemeIdx}`}>
               {Array(r.value)
@@ -73,10 +100,16 @@ const WaffleChart = ({
                       width={10}
                       height={10}
                       margin={0.5}
-                      // todo: background
                       border="5px solid #1f1f1f"
                       title={`${r.id}: ${r.value}`}
-                    />
+                      position="relative"
+                    >
+                      <Quarters
+                        nodeAttributes={sortedAttributes[idx]}
+                        selectedAttributes={selectedAttributes}
+                        arrowClass="waffle"
+                      />
+                    </Box>
                   );
                 })}
             </React.Fragment>
