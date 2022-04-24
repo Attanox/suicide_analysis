@@ -69,7 +69,12 @@ const Home: NextPage<LocalProps> = ({
         familyId={familyId}
       />
       <Box display="block" height="1em" width="100%" />
-      <Box display="flex" height={`calc(100vh - 50px)`} alignItems="center">
+      <Box
+        className={styles.containerChild}
+        display="flex"
+        height={`calc(100vh)`}
+        alignItems="center"
+      >
         <TreeChart
           selectedAttributes={selectedAttributes}
           initialNodes={treeStructure}
@@ -81,7 +86,12 @@ const Home: NextPage<LocalProps> = ({
           selectedAttributes={selectedAttributes}
         />
       </Box>
-      <Box display="flex" alignItems={'center'}>
+      <Box
+        className={styles.containerChild}
+        display="flex"
+        alignItems={'center'}
+        height={`calc(100vh)`}
+      >
         <Heatmap
           attributes={attributes}
           setAttribute={onChangeAttribute}
@@ -94,7 +104,12 @@ const Home: NextPage<LocalProps> = ({
           selectedAttributes={selectedAttributes}
         />
       </Box>
-      <Box display="flex" alignItems={'center'}>
+      <Box
+        className={styles.containerChild}
+        display="flex"
+        alignItems={'center'}
+        height={`calc(100vh)`}
+      >
         <Barchart
           attributes={attributes}
           selectedAttributes={selectedAttributes}

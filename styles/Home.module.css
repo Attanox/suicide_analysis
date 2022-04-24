@@ -1,5 +1,10 @@
 .container {
   padding: 0 2rem;
+  scroll-snap-type: y mandatory;
+}
+
+.containerChild {
+  scroll-snap-align: start;
 }
 
 .main {
