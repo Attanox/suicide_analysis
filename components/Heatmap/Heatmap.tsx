@@ -11,7 +11,6 @@ type LocalProps = {
   attributes: Attributes;
   familyId: string;
   setAttribute: (a: Array<K | ''>) => void;
-  selectedAttributes: Array<K | ''>;
 };
 
 const getCellColor = (value: number, key: string) => {
