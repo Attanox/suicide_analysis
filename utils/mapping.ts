@@ -1,6 +1,6 @@
 import type { Attributes, Datum, K, Structure, TNode } from '../types';
-import * as attributes from '../public/attributes.json';
-import * as structure from '../public/structure.json';
+import attributes from '../public/attributes.json';
+import structure from '../public/structure.json';
 import type { Node } from 'relatives-tree/lib/types';
 
 const getBool = (d: string): boolean => {

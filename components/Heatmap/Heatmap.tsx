@@ -3,7 +3,7 @@ import { Attributes, K } from '../../types';
 import { getHeatMapData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
-import { getDisplayAttributes } from '../../utils/mapping';
+import { getColor, getDisplayAttributes } from '../../utils/mapping';
 
 import styles from '../../styles/Heatmap.module.css';
 
@@ -11,10 +11,11 @@ type LocalProps = {
   attributes: Attributes;
   familyId: string;
   setAttribute: (a: Array<K | ''>) => void;
+  selectedAttributes: Array<K | ''>;
 };
 
-const getCellColor = (value: number) => {
-  return value ? '#1f1f1f' : '#cacaca';
+const getCellColor = (value: number, key: string) => {
+  return value ? getColor(key) : '#cacaca';
 };
 
 const CustomCell = ({
@@ -42,7 +43,7 @@ const CustomCell = ({
         height={height}
         x={0}
         y={0}
-        fill={getCellColor(data.value)}
+        fill={getCellColor(data.value, data.xKey)}
         strokeWidth={borderWidth}
         stroke={borderColor}
         opacity={opacity}
@@ -101,7 +102,7 @@ const Heatmap = (props: LocalProps) => {
           props.setAttribute([data.xKey as K]);
         }}
         tooltip={({ xKey, yKey, value }) => (
-          <strong style={{ color: getCellColor(value) }}>
+          <strong style={{ color: getCellColor(value, xKey as string) }}>
             {xKey} / {yKey}: {value}
           </strong>
         )}

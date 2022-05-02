@@ -1,4 +1,4 @@
-import * as structure from '../public/structure.json';
+import structure from '../public/structure.json';
 import type { ExtNode, Node } from 'relatives-tree/lib/types';
 
 export type Datum = {

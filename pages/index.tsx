@@ -68,12 +68,12 @@ const Home: NextPage<LocalProps> = ({
         setFamilyId={onChangeFamily}
         familyId={familyId}
       />
-      <Box display="block" height="1em" width="100%" />
       <Box
         className={styles.containerChild}
         display="flex"
         height={`calc(100vh)`}
         alignItems="center"
+        paddingTop="60px"
       >
         <TreeChart
           selectedAttributes={selectedAttributes}
@@ -91,6 +91,7 @@ const Home: NextPage<LocalProps> = ({
         display="flex"
         alignItems={'center'}
         height={`calc(100vh)`}
+        paddingTop="60px"
       >
         <Heatmap
           attributes={attributes}
