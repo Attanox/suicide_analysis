@@ -19,6 +19,7 @@ export type Datum = {
   'somatic disorder': boolean;
   id: string;
   kindred: string;
+  personId: string;
 };
 
 export type K = keyof Datum;

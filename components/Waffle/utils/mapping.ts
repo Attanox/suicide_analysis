@@ -1,11 +1,16 @@
-import { Attributes, Datum, K } from '../../../types';
+import { Attributes, Datum, K, TNode } from '../../../types';
 
 export const getWaffleData = (
   attributes: Attributes,
   familyId: string,
-  attribute: Array<K | ''> = ['']
+  attribute: Array<K | ''> = [''],
+  subtree: TNode[]
 ) => {
-  const familyData = attributes.filter((d) => d.kindred === familyId);
+  const subtreeIds = subtree.map((_) => _.id);
+
+  const familyData = attributes.filter(
+    (d) => d.kindred === familyId && subtreeIds.includes(d.personId)
+  );
 
   const result = [
     {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import { Waffle } from '@nivo/waffle';
 
-import { Attributes, Datum, K } from '../../types';
+import { Attributes, Datum, K, TNode } from '../../types';
 import { getWaffleData } from './utils/mapping';
 import WaffleCell from './WaffleCell';
 import { getColor } from '../../utils/mapping';
@@ -13,6 +13,7 @@ type LocalProps = {
   familyId: string;
   total: number;
   selectedAttributes: Array<K | ''>;
+  subtree: TNode[];
 };
 
 const waffleProps = {
@@ -49,10 +50,19 @@ const WaffleChart = ({
   attributes,
   familyId,
   selectedAttributes,
+  subtree,
 }: LocalProps) => {
-  const waffleData = getWaffleData(attributes, familyId, selectedAttributes);
+  const waffleData = getWaffleData(
+    attributes,
+    familyId,
+    selectedAttributes,
+    subtree
+  );
+  const subtreeIds = subtree.map((_) => _.id);
 
-  const familyData = attributes.filter((d) => d.kindred === familyId);
+  const familyData = attributes.filter(
+    (d) => d.kindred === familyId && subtreeIds.includes(d.personId)
+  );
 
   const sortedAttributes = getSortedAttributes(selectedAttributes, familyData);
 
@@ -97,7 +107,7 @@ const WaffleChart = ({
                 height={7}
                 margin={0.5}
                 border="3px solid #1f1f1f"
-                title={`${waffleData[0].id}: ${waffleData[0].value}`}
+                title={`${waffleData[0].id}: ${waffleData[0].value}/${total}`}
                 position="relative"
               >
                 <Quarters

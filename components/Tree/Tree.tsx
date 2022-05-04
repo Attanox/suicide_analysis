@@ -7,7 +7,11 @@ import dynamic from 'next/dynamic';
 
 import styles from '../../styles/Tree.module.css';
 import classNames from 'classnames';
-import { getColor, getTreeStructure } from '../../utils/mapping';
+import {
+  getColor,
+  getSubtreeStructure,
+  getTreeStructure,
+} from '../../utils/mapping';
 import { K, TExtNode, TNode } from '../../types';
 import Quarters from '../Quarters';
 
@@ -64,10 +68,11 @@ type LocalProps = {
   initialNodes: TNode[];
   familyId: string;
   selectedAttributes: Array<K | ''>;
+  setSubtree: (s: TNode[]) => void;
 };
 
-const WIDTH = 70;
-const HEIGHT = 70;
+const WIDTH = 50;
+const HEIGHT = 50;
 
 const getRootId = (nodes: TNode[]) => {
   const res = nodes.find((n) => n.displayId.split('_')[0] !== '');
@@ -79,6 +84,7 @@ const TreeChart = ({
   initialNodes,
   familyId,
   selectedAttributes,
+  setSubtree,
 }: LocalProps) => {
   const [nodes, setNodes] = useState(initialNodes);
   const [rootId, setRootId] = useState(getRootId(initialNodes));
@@ -90,10 +96,19 @@ const TreeChart = ({
     setNodes(newTree);
     setRootId(newRootId);
     setOriginalRootId(newRootId);
-  }, [familyId]);
+    setSubtree(newTree);
+  }, [familyId, setSubtree]);
 
   const onResetClick = () => {
     setRootId(originalRootId);
+    const subtree = getSubtreeStructure(nodes, originalRootId);
+    setSubtree(subtree);
+  };
+
+  const onSetRoot = (newRootId: string) => {
+    setRootId(newRootId);
+    const subtree = getSubtreeStructure(nodes, newRootId);
+    setSubtree(subtree);
   };
 
   if (typeof window === 'undefined') return null;
@@ -112,7 +127,7 @@ const TreeChart = ({
               key={node.id}
               node={node as TExtNode}
               isRoot={node.id === rootId}
-              onSubClick={setRootId}
+              onSubClick={onSetRoot}
               selectedAttributes={selectedAttributes}
               style={{
                 width: WIDTH,

@@ -1,8 +1,14 @@
-import { Attributes, Datum, K } from '../../../types';
+import { Attributes, Datum, K, TNode } from '../../../types';
 
-export const getHeatMapData = (attributes: Attributes, familyId: string) => {
+export const getHeatMapData = (
+  attributes: Attributes,
+  familyId: string,
+  subtree: TNode[]
+) => {
+  const subtreeIds = subtree.map((_) => _.id);
+
   const result = attributes
-    .filter((d) => d.kindred === familyId)
+    .filter((d) => d.kindred === familyId && subtreeIds.includes(d.personId))
     .map((d) => {
       const id = d.id;
       let record = {

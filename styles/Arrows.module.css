@@ -35,31 +35,31 @@
 }
 
 .treeUp {
-  border-left: 22px solid transparent;
-  border-right: 22px solid transparent;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
 
-  border-bottom: 22px solid transparent;
+  border-bottom: 12px solid transparent;
 }
 
 .treeDown {
-  border-left: 22px solid transparent;
-  border-right: 22px solid transparent;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
 
-  border-top: 22px solid transparent;
+  border-top: 12px solid transparent;
 }
 
 .treeRight {
-  border-top: 22px solid transparent;
-  border-bottom: 22px solid transparent;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
 
-  border-left: 22px solid transparent;
+  border-left: 12px solid transparent;
 }
 
 .treeLeft {
-  border-top: 22px solid transparent;
-  border-bottom: 22px solid transparent;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
 
-  border-right: 22px solid transparent;
+  border-right: 12px solid transparent;
 }
 
 .waffleUp {

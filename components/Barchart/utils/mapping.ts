@@ -39,7 +39,7 @@ export const getBarData = (
 
   return Object.keys(familyData).map((k) => {
     const result: any = {
-      familyId: k,
+      familyId: `Family ${k}`,
       suicides: familyData[k].suicides,
     };
     attribute.forEach((attr) => {

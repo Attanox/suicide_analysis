@@ -26,6 +26,7 @@ export const getAttributes = () => {
 
       return {
         id: `${matchingStructure?.bdate}_${matchingStructure?.sex}(${d.personid})`,
+        personId: String(d.personid),
         PD: getBool(d['PD']),
         'PD-Cluster B-emotional': getBool(d['PD-Cluster B-emotional']),
         'PD-Cluster C-anxiety': getBool(d['PD-Cluster C-anxiety']),
@@ -128,6 +129,41 @@ export const getTreeStructure = (familyId: string) => {
   return result;
 };
 
+// TODO:
+export const getSubtreeStructure = (
+  treeStructure: TNode[],
+  newRootId: string
+) => {
+  const subtreeStructure: TNode[] = [];
+
+  const appendedToSubtree = (id: string) => {
+    const subtreeIds = subtreeStructure.map((_) => _.id);
+
+    return subtreeIds.includes(id);
+  };
+
+  const getMembers = (memberId: string) => {
+    if (appendedToSubtree(memberId)) return;
+
+    const treeNode = treeStructure.find((_) => _.id === memberId);
+
+    if (!treeNode) return;
+
+    subtreeStructure.push(treeNode);
+
+    const children = treeNode['children'] || [];
+    const spouses = treeNode['spouses'] || [];
+
+    const childrenAndSpouses = [...children, ...spouses];
+
+    childrenAndSpouses.forEach((_) => getMembers(_.id));
+  };
+
+  getMembers(newRootId);
+
+  return subtreeStructure;
+};
+
 export const getFamilyIds = () => {
   const result = structure
     .map((d) => String(d['KindredID']))
@@ -141,10 +177,11 @@ export const getTotal = (familyId: string) => {
 };
 
 export const getDisplayAttributes = (attributes: Attributes) => {
-  const firstAttr: Partial<Pick<Datum, 'id' | 'kindred'>> &
-    Omit<Datum, 'id' | 'kindred'> = { ...attributes[0] };
+  const firstAttr: Partial<Pick<Datum, 'id' | 'kindred' | 'personId'>> &
+    Omit<Datum, 'id' | 'kindred' | 'personId'> = { ...attributes[0] };
   delete firstAttr['id'];
   delete firstAttr['kindred'];
+  delete firstAttr['personId'];
   const res = Object.keys(firstAttr);
   return res;
 };

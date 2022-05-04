@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Attributes, K } from '../../types';
+import { Attributes, K, TNode } from '../../types';
 import { getHeatMapData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
@@ -11,6 +11,7 @@ type LocalProps = {
   attributes: Attributes;
   familyId: string;
   setAttribute: (a: Array<K | ''>) => void;
+  subtree: TNode[];
 };
 
 const getCellColor = (value: number, key: string) => {
@@ -55,7 +56,11 @@ const CustomCell = ({
 };
 
 const Heatmap = (props: LocalProps) => {
-  const heatMapData = getHeatMapData(props.attributes, props.familyId);
+  const heatMapData = getHeatMapData(
+    props.attributes,
+    props.familyId,
+    props.subtree
+  );
 
   const keys = getDisplayAttributes(props.attributes);
 
@@ -110,8 +115,21 @@ const Heatmap = (props: LocalProps) => {
   );
 };
 
+const subtreesEqual = (prevSubtree: TNode[], nextSubtree: TNode[]) => {
+  if (prevSubtree === nextSubtree) return true;
+  if (prevSubtree.length !== nextSubtree.length) return false;
+
+  for (let i = 0; i < prevSubtree.length; ++i) {
+    if (prevSubtree[i].id !== nextSubtree[i].id) return false;
+  }
+  return true;
+};
+
 const areEqual = (prevProps: LocalProps, nextProps: LocalProps) => {
-  return prevProps.familyId === nextProps.familyId;
+  return (
+    prevProps.familyId === nextProps.familyId &&
+    subtreesEqual(prevProps.subtree, nextProps.subtree)
+  );
 };
 
 export default React.memo(Heatmap, areEqual);

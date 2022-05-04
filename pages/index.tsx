@@ -47,6 +47,7 @@ const Home: NextPage<LocalProps> = ({
   const [selectedAttributes, setSelectedAttributes] = useState<Array<K | ''>>(
     []
   );
+  const [subtree, setSubtree] = useState<TNode[]>([]);
 
   const onChangeFamily = (id: string) => {
     setFamilyId(id);
@@ -79,6 +80,7 @@ const Home: NextPage<LocalProps> = ({
           selectedAttributes={selectedAttributes}
           initialNodes={treeStructure}
           familyId={familyId}
+          setSubtree={setSubtree}
         />
         <AttributePicker
           attributes={attributes}
@@ -97,12 +99,14 @@ const Home: NextPage<LocalProps> = ({
           attributes={attributes}
           setAttribute={onChangeAttribute}
           familyId={familyId}
+          subtree={subtree}
         />
         <WaffleChart
           total={getTotal(familyId)}
           attributes={attributes}
           familyId={familyId}
           selectedAttributes={selectedAttributes}
+          subtree={subtree}
         />
       </Box>
       <Box
