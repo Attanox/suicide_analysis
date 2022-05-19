@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Attributes, K, TNode } from '../../types';
-import { getHeatMapData } from './utils/mapping';
+import { getHeatMapData, getSumData } from './utils/mapping';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 import { Box } from '@chakra-ui/react';
 import { getColor, getDisplayAttributes } from '../../utils/mapping';
@@ -61,6 +61,8 @@ const Heatmap = (props: LocalProps) => {
     props.familyId,
     props.subtree
   );
+
+  // const sumData = getSumData(props.attributes, props.familyId, props.subtree);
 
   const keys = getDisplayAttributes(props.attributes);
 

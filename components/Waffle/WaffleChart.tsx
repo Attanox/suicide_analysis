@@ -78,7 +78,7 @@ const WaffleChart = ({
     >
       <Text fontSize="lg" style={{ marginBottom: '10px' }}>
         Current attributes:{' '}
-        {selectedAttributes.map((s) => {
+        {selectedAttributes.map((s, idx) => {
           const wd = waffleData.find((w) => w.id === s);
           return (
             <React.Fragment key={s}>
@@ -91,7 +91,7 @@ const WaffleChart = ({
               >
                 {s} {wd && `(${wd.value})`}
               </Text>
-              ,{' '}
+              {idx + 1 === selectedAttributes.length ? '' : ','}{' '}
             </React.Fragment>
           );
         })}
