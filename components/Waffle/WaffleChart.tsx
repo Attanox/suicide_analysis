@@ -128,6 +128,7 @@ const WaffleChart = ({
                 height={7}
                 margin={0.5}
                 backgroundColor="#cacaca"
+                borderRadius="50%"
               />
             );
           })}
